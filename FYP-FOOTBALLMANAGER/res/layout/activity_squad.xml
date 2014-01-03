@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/footballpitch"
+    android:orientation="vertical" >
+
+    <ImageButton
+        android:id="@+id/GK"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"
+        android:src="@drawable/playericon" />
+
+    <ImageButton
+        android:id="@+id/LS"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="29dp"
+        android:layout_marginTop="110dp"
+        android:layout_toLeftOf="@+id/GK"
+        android:src="@drawable/playericon" />
+
+    <ImageButton
+        android:id="@+id/RS"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignTop="@+id/LS"
+        android:layout_marginLeft="42dp"
+        android:layout_toRightOf="@+id/LS"
+        android:src="@drawable/playericon" />
+
+    <ImageButton
+        android:id="@+id/LM"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="32dp"
+        android:layout_toLeftOf="@+id/LS"
+        android:src="@drawable/playericon" />
+
+    <ImageButton
+        android:id="@+id/CML"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignTop="@+id/LM"
+        android:layout_toLeftOf="@+id/RS"
+        android:src="@drawable/playericon" />
+
+    <ImageButton
+        android:id="@+id/CMR"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignLeft="@+id/RS"
+        android:layout_alignTop="@+id/CML"
+        android:src="@drawable/playericon" />
+
+    <ImageButton
+        android:id="@+id/RM"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignTop="@+id/CMR"
+        android:layout_marginLeft="45dp"
+        android:layout_toRightOf="@+id/CMR"
+        android:src="@drawable/playericon" />
+
+    <ImageButton
+        android:id="@+id/LB"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_above="@+id/GK"
+        android:layout_marginBottom="67dp"
+        android:layout_toLeftOf="@+id/LM"
+        android:src="@drawable/playericon" />
+
+    <ImageButton
+        android:id="@+id/CBL"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignLeft="@+id/LS"
+        android:layout_alignTop="@+id/LB"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/playericon" />
+
+    <ImageButton
+        android:id="@+id/RB"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignLeft="@+id/RM"
+        android:layout_alignTop="@+id/LB"
+        android:src="@drawable/playericon" />
+
+    <ImageButton
+        android:id="@+id/CBR"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignTop="@+id/CBL"
+        android:layout_toLeftOf="@+id/RM"
+        android:src="@drawable/playericon" />
+
+</RelativeLayout>
