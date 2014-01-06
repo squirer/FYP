@@ -2,5 +2,7 @@
 <lint>
     <issue id="NewApi">
         <ignore path="src\com\example\fyp_footballmanager\DrawingTheArrow.java" />
+        <ignore path="src\com\example\fyp_footballmanager\Squad.java" />
+        <ignore path="src\com\example\fyp_footballmanager\Tactics.java" />
     </issue>
 </lint>

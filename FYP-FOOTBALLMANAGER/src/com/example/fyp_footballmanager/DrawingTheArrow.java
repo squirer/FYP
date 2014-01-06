@@ -14,26 +14,31 @@ import android.view.View;
 
 public class DrawingTheArrow extends View{
 
+	boolean touched=false;
 	Bitmap tactic;
 	Paint blue = new Paint();
 	float x,y;
+
 	public DrawingTheArrow(Context context) {
 		super(context);
 		// the arrow_down_float here should be later changed to an image with squad
 		// and pitch background 
-		tactic = BitmapFactory.decodeResource(getResources(), R.drawable.arrow_down_float);
+		tactic = BitmapFactory.decodeResource(getResources(), R.drawable.arrow_up_float);
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-	
-		blue.setColor(Color.BLUE);
-		blue.setStyle(Paint.Style.FILL);
-		canvas.save();
-		canvas.drawBitmap(tactic, x, y, blue);
-		canvas.restore();
+		/*
+		if(touched) {
+			blue.setColor(Color.BLUE);
+			blue.setStyle(Paint.Style.FILL);
+			canvas.save();
+			canvas.drawBitmap(tactic, x, y, blue);
+			canvas.restore();
+		}
 		invalidate();
+		*/
 	}
 
 
@@ -41,10 +46,11 @@ public class DrawingTheArrow extends View{
 	/*Detects x and y position of touch on screen. Updates these values for arrow position*/
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		x = event.getX();
-		y = event.getY();
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
+			x = event.getX();
+			y = event.getY();
+			touched = true;
 		case MotionEvent.ACTION_MOVE:
 		case MotionEvent.ACTION_UP:
 		}
@@ -71,4 +77,4 @@ public class DrawingTheArrow extends View{
 		y = 0;
 	}
 	canvas.drawRect(r, blue);
-*/
+ */
