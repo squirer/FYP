@@ -2,10 +2,10 @@ package com.example.fyp_footballmanager;
 
 public class PlayerCoordinate {
 
-	float xPos;
-	float yPos;
+	double xPos;
+	double yPos;
 	
-	public PlayerCoordinate(float x, float y) {
+	public PlayerCoordinate(double x, double y) {
 		xPos = x;
 		yPos = y;
 	}

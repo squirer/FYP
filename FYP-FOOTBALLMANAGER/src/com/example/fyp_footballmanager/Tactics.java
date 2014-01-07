@@ -26,7 +26,6 @@ public class Tactics extends Activity {
 		View contentView = mInflater.inflate(R.layout.activity_tactics, null); 
 		squadLayout = (RelativeLayout) contentView.findViewById(R.id.fullSquadLayout);
 
-		
 		setContentView(squadLayout);
 		
 	}
