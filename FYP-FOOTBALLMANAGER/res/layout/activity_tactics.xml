@@ -7,6 +7,7 @@
      android:background="@drawable/footballpitch">
    <!-- android:background="@drawable/mainbackground"> -->  
     
+<!-- 
      <ImageButton
         android:id="@+id/goalkeeper"
         android:layout_width="15dp"
@@ -102,5 +103,5 @@
         android:layout_alignTop="@+id/centerLdefender"
         android:layout_toLeftOf="@+id/rightMid"
         android:src="@drawable/playericon" />
-
+ --> 
 </RelativeLayout>
