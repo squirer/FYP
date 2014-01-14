@@ -29,6 +29,7 @@ public final class R {
         public static final int mainbackground=0x7f020005;
         public static final int playericon=0x7f020006;
         public static final int playericon2=0x7f020007;
+        public static final int playericon3=0x7f020008;
     }
     public static final class id {
         public static final int About=0x7f090009;
@@ -60,6 +61,7 @@ public final class R {
     }
     public static final class raw {
         public static final int lose=0x7f040000;
+        public static final int squadformation=0x7f040001;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
