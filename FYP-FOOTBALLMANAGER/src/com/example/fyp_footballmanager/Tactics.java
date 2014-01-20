@@ -1,5 +1,11 @@
 package com.example.fyp_footballmanager;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -20,6 +26,7 @@ public class Tactics extends Activity {
 	float h,w;
 
 	PlayerCoordinate[] playerPositions;
+	String savedFormation="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,24 +42,10 @@ public class Tactics extends Activity {
 		View contentView = mInflater.inflate(R.layout.activity_tactics, null); 
 		squadLayout = (RelativeLayout) contentView.findViewById(R.id.fullSquadLayout);
 
-/*
-		Bundle b=this.getIntent().getExtras();
-		if(b != null) {
-			float[] array = b.getFloatArray("xs");
-			Log.e("contains", array.toString());
-		}
-*/
-/*		float[] array=b.getFloatArray("xs");
-		if(array[0] == 5) {
-			String result = "{";
-			for(int i=0; i<array.length; i++) {
-				result += array[i];
-			}
-			result+="}";
-			Log.e("array", result);
-		}
-*/
-
+		savedFormation = readFromFile();
+		copyCoordinatesFromFile(savedFormation);
+		showSquad();
+		
 		setContentView(squadLayout);
 
 		squadLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -70,6 +63,55 @@ public class Tactics extends Activity {
 		});
 	}
 
+
+	public void copyCoordinatesFromFile(String contents) {
+		String[] allCoordinates = contents.split(",");
+		
+		String[] individualCoordinates;
+		String x;
+		String y;
+		PlayerCoordinate[] tempPositions = new PlayerCoordinate[11];
+		for(int i=0; i<allCoordinates.length; i++) {
+			individualCoordinates = allCoordinates[i].split(" ");
+			x = individualCoordinates[0];
+			y = individualCoordinates[1];
+			PlayerCoordinate p = 
+					new PlayerCoordinate(Double.parseDouble(x), Double.parseDouble(y));
+			tempPositions[i] = p;
+		}
+		playerPositions = tempPositions;
+	}
+	
+
+	private String readFromFile() {
+
+		String ret = "";
+
+		try {
+			InputStream inputStream = openFileInput("squad.txt");
+
+			if ( inputStream != null ) {
+				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+				String receiveString = "";
+				StringBuilder stringBuilder = new StringBuilder();
+
+				while ( (receiveString = bufferedReader.readLine()) != null ) {
+					stringBuilder.append(receiveString);
+				}
+
+				inputStream.close();
+				ret = stringBuilder.toString();
+			}
+		}
+		catch (FileNotFoundException e) {
+			Log.e("login activity", "File not found: " + e.toString());
+		} catch (IOException e) {
+			Log.e("login activity", "Can not read file: " + e.toString());
+		}
+
+		return ret;
+	}
 
 
 	public void drawTheArrow() {
@@ -90,6 +132,9 @@ public class Tactics extends Activity {
 			player.setBackgroundResource(R.drawable.playericon2);
 			player.setX((float) p.xPos);
 			player.setY((float) p.yPos);
+			int imageWidth = (int)w/20;
+			int imageHeight = (int)h/30;
+			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
 			squadLayout.addView(player);
 			setContentView(squadLayout);
 		}

@@ -6,108 +6,20 @@
     android:background="@drawable/footballpitch"
     android:orientation="vertical" >
  
- <!--  
-    <ImageButton
-        android:id="@+id/LS"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="29dp"
-        android:layout_marginTop="110dp"
-        android:layout_toLeftOf="@+id/GK"
-        android:src="@drawable/playericon" />
-
-
-    <ImageButton
-        android:id="@+id/RS"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-         android:layout_alignParentTop="true"
-        android:layout_marginLeft="42dp"
-        android:layout_marginTop="110dp"
-        android:layout_toRightOf="@+id/GK"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/LM"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginRight="70dp"
-        android:layout_marginTop="200dp"
-        android:layout_toLeftOf="@+id/GK"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/CML"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="240dp"
-        android:layout_toLeftOf="@+id/GK"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/CMR"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="240dp"
-        android:layout_toRightOf="@+id/GK"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/RM"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="200dp"
-        android:layout_toRightOf="@+id/GK"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/LB"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginRight="70dp"
-        android:layout_marginTop="320dp"
-        android:layout_toLeftOf="@+id/GK"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/CBL"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="350dp"
-        android:layout_toLeftOf="@+id/GK"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/CBR"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="350dp"
-        android:layout_toRightOf="@+id/GK"
-        android:src="@drawable/playericon" />
-    
-    <ImageButton
-        android:id="@+id/RB"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="320dp"
-        android:layout_toRightOf="@+id/GK"
-        android:src="@drawable/playericon" />
-
-
-    <ImageButton
-        android:id="@+id/GK"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+   <Button
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="58dp"
-        android:src="@drawable/playericon" />
--->
+        android:layout_alignParentLeft="true"
+        android:text="Reset Squad" />
+
+   <Button
+       android:id="@+id/save"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentRight="true"
+       android:text="Save Squad" />
+
 </RelativeLayout>

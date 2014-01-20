@@ -36,14 +36,18 @@ public class Login extends Activity {
 		
 		String username = username_field.getText().toString();
 		String password = password_field.getText().toString();
-		
+	
+		/*
 		if(username != null && password != null)
 		{			
-			/* attempt to login */	
+			// attempt to login 	
 			if(username.equals(usernameTest) && password.equals(passwordTest)) {
 				Intent intent = new Intent(this, MainActivity.class);
 				startActivity(intent);	
 			}
-		}	
+		}
+		*/
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);	
 	}
 }
