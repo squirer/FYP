@@ -28,7 +28,6 @@ public class Squad extends Activity {
 	int clickedButton;
 	private int _xDelta;
 	private int _yDelta;
-	ImageButton goalk,rightb,centreb,centreb2,leftb,rightm,centrem,centrem2,leftm,rightf,leftf;
 	String[] tags = {"gk", "rb", "cb", "cb2", "lb", "rm", "cm", "cm2", "lm", "rf", "lf"};
 	String contents;
 	Button reset;
@@ -36,15 +35,7 @@ public class Squad extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 
-		init();
-		setDefaultSquad();
-		contents = readFromFile();
-		Log.e("CONTENTS......", contents);
-		copyCoordinatesFromFile(contents);
-		addPlayersToScreen();
-		updateReferencesToButtons();
-		setOnClickListenersForAllPlayers();
-		setContentView(squadLayout);
+		init();		
 	}
 
 	
@@ -54,33 +45,54 @@ public class Squad extends Activity {
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 		h = displaymetrics.heightPixels;
 		w = displaymetrics.widthPixels;
-
 		LayoutInflater mInflater = LayoutInflater.from(this);  
 		View contentView = mInflater.inflate(R.layout.activity_squad, null); 
 		squadLayout = (RelativeLayout) contentView.findViewById(R.id.fullSquadLayoutActivitySquad);
 		setContentView(squadLayout);
-		ImageButton[] tempButtons = {goalk,rightb,centreb,centreb2,leftb,rightm,centrem,centrem2,leftm,rightf,leftf};
-		playerButtons = tempButtons;
-		reset = (Button) squadLayout.findViewById(R.id.reset);
-		
+		reset = (Button) squadLayout.findViewById(R.id.reset);	
 /*IDEALLY HERE SHOULD HAVE THE FILE CHECK TO SEE IF THERE IS A CURRENT DEFAULT SQUAD SET*/
-	}
-	
-	
-	public void dealWithFile() {
+		
 		contents = readFromFile();
-		if(!contents.equals("")) {
+		if(contents.equals("") || contents.equals(null)) {
 			setDefaultSquad();
+			contents = readFromFile();
 		}
-		else{
-			copyCoordinatesFromFile(contents);
-			addPlayersToScreen();
-		}
+		copyCoordinatesFromFile();
+		addPlayersToScreen();
+		updateReferencesToButtons();
+		setOnClickListenersForAllPlayers();
 	}
 	
 
+	public void resetSquadToDefault() {
+/*		String result = "" + (w/2.2) + "," + (h/10* 7.3) + " " +
+							 (w/10)*7.6 + "," + (h/10)*5.5 + " " +
+							 (w/10)*5.6 + "," + (h/10)*6 + " " +
+							 (w/10)*3.6 + "," + (h/10)*6 + " " +
+							 (w/10)*1.6 + "," + (h/10)*5.5 + " " +
+							 (w/10)*7.6 + "," + (h/10)*3.5 + " " +
+							 (w/10)*5.6 + "," + (h/10) * 4 + " " +
+							 (w/10)*3.6 + "," + (h/10) * 4 + " " +
+							 (w/10)*1.6 + "," + (h/10) * 3.5 + " " +
+							 (w/10)*5.6 + "," + (h/10)*1.8 + " " +
+							 (w/10)*3.6 + "," + (h/10) *1.8 + " ";
+		writeToFile(result);
+		contents = readFromFile();
+		copyCoordinatesFromFile();
+*/		
+		setDefaultSquad();
+		for(int i=0; i<playerButtons.length; i++) {
+			playerButtons[i].setX((float) allPositions[i].xPos);
+			playerButtons[i].setY((float) allPositions[i].yPos);
+		}
+		setContentView(squadLayout);
+	}
+
+	
+	
 	/*reads coordinates from file and updates the playerPositions array*/
-	public void copyCoordinatesFromFile(String contents) {
+	public void copyCoordinatesFromFile() {
+		contents = readFromFile();
 		String[] allCoordinates = contents.split(",");
 		String[] individualCoordinates;
 		String x;
@@ -144,8 +156,24 @@ public class Squad extends Activity {
 		}
 		catch (FileNotFoundException e) {
 			Log.e("login activity", "File not found: " + e.toString());
+			ImageButton ERROR = new ImageButton(this);
+			ERROR.setBackgroundResource(R.drawable.arrowtactic);
+			ERROR.setX((float) w/2);
+			ERROR.setY((float) h - 15);
+			int imageWidth = (int)w/20;
+			int imageHeight = (int)h/30;
+			ERROR.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
+			squadLayout.addView(ERROR);
 		} catch (IOException e) {
 			Log.e("login activity", "Can not read file: " + e.toString());
+			ImageButton ERROR = new ImageButton(this);
+			ERROR.setBackgroundResource(R.drawable.arrowtactic);
+			ERROR.setX((float) w/2);
+			ERROR.setY((float) h - 15);
+			int imageWidth = (int)w/20;
+			int imageHeight = (int)h/30;
+			ERROR.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
+			squadLayout.addView(ERROR);
 		}
 
 		return ret;
@@ -208,8 +236,9 @@ public class Squad extends Activity {
 			int imageHeight = (int)h/30;
 			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
 			squadLayout.addView(player);
-			playerButtons[i] = player;
+			//playerButtons[i] = player;
 		}
+		updateReferencesToButtons();
 		setContentView(squadLayout);
 	}
 
@@ -595,21 +624,12 @@ public class Squad extends Activity {
 			}});
 		
 		
-	/*	
 		reset.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				for(int i=0; i<playerButtons.length; i++) {
-					squadLayout.removeView(playerButtons[i]);
-				}
-				setDefaultSquad();
-				contents = readFromFile();
-				copyCoordinatesFromFile(contents);
-				addPlayersToScreen();
-				updateReferencesToButtons();
+				resetSquadToDefault();
 			}
 		});
-	*/
 	}
 }
