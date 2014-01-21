@@ -27,9 +27,10 @@ public final class R {
         public static final int footballicon=0x7f020003;
         public static final int footballpitch=0x7f020004;
         public static final int mainbackground=0x7f020005;
-        public static final int playericon=0x7f020006;
-        public static final int playericon2=0x7f020007;
-        public static final int playericon3=0x7f020008;
+        public static final int orb=0x7f020006;
+        public static final int orb2=0x7f020007;
+        public static final int playericon2=0x7f020008;
+        public static final int playericon3=0x7f020009;
     }
     public static final class id {
         public static final int About=0x7f090009;

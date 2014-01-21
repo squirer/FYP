@@ -31,23 +31,9 @@ public class Tactics extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		DisplayMetrics displaymetrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-		h = displaymetrics.heightPixels;
-		w = displaymetrics.widthPixels;
-		distortionX = (float) (h/59.2);
-		distortionY = (float) (w/36);
-
-		LayoutInflater mInflater = LayoutInflater.from(this);  
-		View contentView = mInflater.inflate(R.layout.activity_tactics, null); 
-		squadLayout = (RelativeLayout) contentView.findViewById(R.id.fullSquadLayout);
-
-		savedFormation = readFromFile();
-		copyCoordinatesFromFile(savedFormation);
-		showSquad();
 		
-		setContentView(squadLayout);
-
+		init();
+		
 		squadLayout.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -64,6 +50,25 @@ public class Tactics extends Activity {
 	}
 
 
+	public void init() {
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		h = displaymetrics.heightPixels;
+		w = displaymetrics.widthPixels;
+		distortionX = (float) (h/59.2);
+		distortionY = (float) (w/36);
+
+		LayoutInflater mInflater = LayoutInflater.from(this);  
+		View contentView = mInflater.inflate(R.layout.activity_tactics, null); 
+		squadLayout = (RelativeLayout) contentView.findViewById(R.id.fullSquadLayout);
+
+		savedFormation = readFromFile();
+		copyCoordinatesFromFile(savedFormation);
+		showSquad();
+		
+		setContentView(squadLayout);
+	}
+	
 	public void copyCoordinatesFromFile(String contents) {
 		String[] allCoordinates = contents.split(",");
 		
@@ -129,11 +134,11 @@ public class Tactics extends Activity {
 		for(int i=0; i<playerPositions.length; i++) {
 			PlayerCoordinate p = playerPositions[i];
 			ImageButton player = new ImageButton(this);
-			player.setBackgroundResource(R.drawable.playericon2);
+			player.setBackgroundResource(R.drawable.orb2);
 			player.setX((float) p.xPos);
 			player.setY((float) p.yPos);
-			int imageWidth = (int)w/20;
-			int imageHeight = (int)h/30;
+			int imageWidth = (int)w/17;
+			int imageHeight = (int)h/27;
 			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
 			squadLayout.addView(player);
 			setContentView(squadLayout);

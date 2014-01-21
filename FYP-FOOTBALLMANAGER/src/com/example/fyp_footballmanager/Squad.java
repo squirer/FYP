@@ -228,12 +228,12 @@ public class Squad extends Activity {
 		for(int i=0; i<allPositions.length; i++) {
 			PlayerCoordinate p = allPositions[i];
 			ImageButton player = new ImageButton(this);
-			player.setBackgroundResource(R.drawable.playericon2);
+			player.setBackgroundResource(R.drawable.orb2);
 			player.setX((float) p.xPos);
 			player.setY((float) p.yPos);
 			player.setTag(tags[i]);
-			int imageWidth = (int)w/20;
-			int imageHeight = (int)h/30;
+			int imageWidth = (int)w/17;
+			int imageHeight = (int)h/27;
 			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
 			squadLayout.addView(player);
 			//playerButtons[i] = player;
@@ -246,7 +246,7 @@ public class Squad extends Activity {
 	/*sets colours back to their original so as nothing seems selected from the squad*/
 	public void setColoursOriginal() {
 		for(int i=0; i<playerButtons.length; i++) {
-			playerButtons[i].setBackgroundResource(R.drawable.playericon2);
+			playerButtons[i].setBackgroundResource(R.drawable.orb2);
 		}
 	}
 
@@ -262,18 +262,18 @@ public class Squad extends Activity {
 					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 					_xDelta = X - lParams.leftMargin;
 					_yDelta = Y - lParams.topMargin;
-					playerButtons[1].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[1].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_UP:
-					playerButtons[1].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[1].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[1].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[1].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[1].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[1].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
@@ -284,7 +284,7 @@ public class Squad extends Activity {
 					layoutParams.rightMargin = -250;
 					layoutParams.bottomMargin = -250;
 					playerButtons[1].setLayoutParams(layoutParams);
-					playerButtons[1].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[1].setBackgroundResource(R.drawable.orb);
 					break;
 				}
 				return true;
@@ -299,18 +299,18 @@ public class Squad extends Activity {
 					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 					_xDelta = X - lParams.leftMargin;
 					_yDelta = Y - lParams.topMargin;
-					playerButtons[2].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[2].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_UP:
-					playerButtons[2].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[2].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[2].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[2].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[2].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[2].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
@@ -321,7 +321,7 @@ public class Squad extends Activity {
 					layoutParams.rightMargin = -250;
 					layoutParams.bottomMargin = -250;
 					playerButtons[2].setLayoutParams(layoutParams);
-					playerButtons[2].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[2].setBackgroundResource(R.drawable.orb);
 					break;
 				}
 				return true;
@@ -336,18 +336,18 @@ public class Squad extends Activity {
 					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 					_xDelta = X - lParams.leftMargin;
 					_yDelta = Y - lParams.topMargin;
-					playerButtons[3].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[3].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_UP:
-					playerButtons[3].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[3].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[3].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[3].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[3].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[3].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
@@ -358,7 +358,7 @@ public class Squad extends Activity {
 					layoutParams.rightMargin = -250;
 					layoutParams.bottomMargin = -250;
 					playerButtons[3].setLayoutParams(layoutParams);
-					playerButtons[3].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[3].setBackgroundResource(R.drawable.orb);
 					break;
 				}
 				return true;
@@ -373,18 +373,18 @@ public class Squad extends Activity {
 					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 					_xDelta = X - lParams.leftMargin;
 					_yDelta = Y - lParams.topMargin;
-					playerButtons[4].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[4].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_UP:
-					playerButtons[4].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[4].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[4].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[4].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[4].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[4].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
@@ -395,7 +395,7 @@ public class Squad extends Activity {
 					layoutParams.rightMargin = -250;
 					layoutParams.bottomMargin = -250;
 					playerButtons[4].setLayoutParams(layoutParams);
-					playerButtons[4].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[4].setBackgroundResource(R.drawable.orb);
 					break;
 				}
 				return true;
@@ -410,18 +410,18 @@ public class Squad extends Activity {
 					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 					_xDelta = X - lParams.leftMargin;
 					_yDelta = Y - lParams.topMargin;
-					playerButtons[5].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[5].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_UP:
-					playerButtons[5].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[5].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[5].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[5].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[5].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[5].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
@@ -432,7 +432,7 @@ public class Squad extends Activity {
 					layoutParams.rightMargin = -250;
 					layoutParams.bottomMargin = -250;
 					playerButtons[5].setLayoutParams(layoutParams);
-					playerButtons[5].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[5].setBackgroundResource(R.drawable.orb);
 					break;
 				}
 				return true;
@@ -447,18 +447,18 @@ public class Squad extends Activity {
 					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 					_xDelta = X - lParams.leftMargin;
 					_yDelta = Y - lParams.topMargin;
-					playerButtons[6].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[6].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_UP:
-					playerButtons[6].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[6].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[6].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[6].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[6].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[6].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
@@ -469,7 +469,7 @@ public class Squad extends Activity {
 					layoutParams.rightMargin = -250;
 					layoutParams.bottomMargin = -250;
 					playerButtons[6].setLayoutParams(layoutParams);
-					playerButtons[6].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[6].setBackgroundResource(R.drawable.orb);
 					break;
 				}
 				return true;
@@ -484,18 +484,18 @@ public class Squad extends Activity {
 					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 					_xDelta = X - lParams.leftMargin;
 					_yDelta = Y - lParams.topMargin;
-					playerButtons[7].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[7].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_UP:
-					playerButtons[7].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[7].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[7].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[7].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[7].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[7].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
@@ -506,7 +506,7 @@ public class Squad extends Activity {
 					layoutParams.rightMargin = -250;
 					layoutParams.bottomMargin = -250;
 					playerButtons[7].setLayoutParams(layoutParams);
-					playerButtons[7].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[7].setBackgroundResource(R.drawable.orb);
 					break;
 				}
 				return true;
@@ -521,18 +521,18 @@ public class Squad extends Activity {
 					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 					_xDelta = X - lParams.leftMargin;
 					_yDelta = Y - lParams.topMargin;
-					playerButtons[8].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[8].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_UP:
-					playerButtons[8].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[8].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[8].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[8].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[8].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[8].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
@@ -543,7 +543,7 @@ public class Squad extends Activity {
 					layoutParams.rightMargin = -250;
 					layoutParams.bottomMargin = -250;
 					playerButtons[8].setLayoutParams(layoutParams);
-					playerButtons[8].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[8].setBackgroundResource(R.drawable.orb);
 					break;
 				}
 				return true;
@@ -558,18 +558,18 @@ public class Squad extends Activity {
 					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 					_xDelta = X - lParams.leftMargin;
 					_yDelta = Y - lParams.topMargin;
-					playerButtons[9].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[9].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_UP:
-					playerButtons[9].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[9].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[9].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[9].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[9].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[9].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
@@ -580,7 +580,7 @@ public class Squad extends Activity {
 					layoutParams.rightMargin = -250;
 					layoutParams.bottomMargin = -250;
 					playerButtons[9].setLayoutParams(layoutParams);
-					playerButtons[9].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[9].setBackgroundResource(R.drawable.orb);
 					break;
 				}
 				return true;
@@ -595,18 +595,18 @@ public class Squad extends Activity {
 					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 					_xDelta = X - lParams.leftMargin;
 					_yDelta = Y - lParams.topMargin;
-					playerButtons[10].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[10].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_UP:
-					playerButtons[10].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[10].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[10].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[10].setBackgroundResource(R.drawable.orb);
 					break;
 				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[10].setBackgroundResource(R.drawable.playericon2);
+					playerButtons[10].setBackgroundResource(R.drawable.orb2);
 					updateReferencesToButtons();
 					saveFormationToFile();
 					break;
@@ -617,7 +617,7 @@ public class Squad extends Activity {
 					layoutParams.rightMargin = -250;
 					layoutParams.bottomMargin = -250;
 					playerButtons[10].setLayoutParams(layoutParams);
-					playerButtons[10].setBackgroundResource(R.drawable.playericon3);
+					playerButtons[10].setBackgroundResource(R.drawable.orb);
 					break;
 				}
 				return true;
