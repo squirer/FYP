@@ -64,22 +64,7 @@ public class Squad extends Activity {
 	}
 	
 
-	public void resetSquadToDefault() {
-/*		String result = "" + (w/2.2) + "," + (h/10* 7.3) + " " +
-							 (w/10)*7.6 + "," + (h/10)*5.5 + " " +
-							 (w/10)*5.6 + "," + (h/10)*6 + " " +
-							 (w/10)*3.6 + "," + (h/10)*6 + " " +
-							 (w/10)*1.6 + "," + (h/10)*5.5 + " " +
-							 (w/10)*7.6 + "," + (h/10)*3.5 + " " +
-							 (w/10)*5.6 + "," + (h/10) * 4 + " " +
-							 (w/10)*3.6 + "," + (h/10) * 4 + " " +
-							 (w/10)*1.6 + "," + (h/10) * 3.5 + " " +
-							 (w/10)*5.6 + "," + (h/10)*1.8 + " " +
-							 (w/10)*3.6 + "," + (h/10) *1.8 + " ";
-		writeToFile(result);
-		contents = readFromFile();
-		copyCoordinatesFromFile();
-*/		
+	public void resetSquadToDefault() {	
 		setDefaultSquad();
 		for(int i=0; i<playerButtons.length; i++) {
 			playerButtons[i].setX((float) allPositions[i].xPos);
@@ -154,6 +139,7 @@ public class Squad extends Activity {
 				ret = stringBuilder.toString();
 			}
 		}
+		
 		catch (FileNotFoundException e) {
 			Log.e("login activity", "File not found: " + e.toString());
 			ImageButton ERROR = new ImageButton(this);

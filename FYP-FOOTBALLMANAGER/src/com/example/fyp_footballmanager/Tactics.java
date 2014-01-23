@@ -5,22 +5,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-public class Tactics extends Activity {
+public class Tactics extends Activity implements Runnable {
 
 	RelativeLayout squadLayout;
 	float arrowX;
@@ -33,7 +32,7 @@ public class Tactics extends Activity {
 	float distortionY;
 	float h,w;
 	int clickedId;
-	
+
 	ImageButton[] playerButtons = new ImageButton[11];
 	String[] tags = {"gk", "rb", "cb", "cb2", "lb", "rm", "cm", "cm2", "lm", "rf", "lf"};
 	PlayerCoordinate[] playerPositions;
@@ -42,7 +41,6 @@ public class Tactics extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-
 		init();
 		setClickListenersForPlayers();
 
@@ -50,12 +48,25 @@ public class Tactics extends Activity {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (clickedId != 0 && event.getAction() == MotionEvent.ACTION_DOWN){
+					playerButtons[clickedId].setBackgroundResource(R.drawable.orb2);
 					arrowX = event.getX() - distortionX;
 					arrowY = event.getY() - distortionY;
 					playX = playerButtons[clickedId].getX();
 					playY = playerButtons[clickedId].getY();
 					drawTheArrow(playX, playY);
+					//animatePlayer(playX,playY,arrowX,arrowY, playerButtons[clickedId]);
+
+					int distanceX = (int)(Math.abs(playX - arrowX))/100;
+					int distanceY = (int)(Math.abs(playY - arrowY))/100;
+					
+					TranslateAnimation animation = new TranslateAnimation(0, arrowX-playX, 0, arrowY - playY);
+					animation.setDuration(2000); // duartion in ms
+					//if this is set to true it will keep final position I think
+					animation.setFillAfter(false);
+					animation.setRepeatCount(10);
+					playerButtons[clickedId].startAnimation(animation);
 					clickedId = 0;
+					
 					return true;
 				}
 				return false;
@@ -63,31 +74,15 @@ public class Tactics extends Activity {
 		});
 	}
 
-	public void rotateArrowToDirection() {
-	    rotateAngle = 0;
-		// opposite is position away from player
-		float opposite = Math.abs(arrowY - playY);
-		float adjacent = Math.abs(arrowX - playX);
-		float hypotenuse = (float) Math.sqrt((opposite*opposite) + (adjacent * adjacent));
-		rotateAngle = (float) Math.asin(opposite/hypotenuse);
-		setQuadrant();
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
-	
-	public void setQuadrant() {
-		if(arrowX < playX && arrowY < playY) {
-			rotateAngle += 90;
-		}
-		if(arrowX > playX && arrowY < playY) {
-			rotateAngle = 270-rotateAngle;
-		}
-		if(arrowX < playX && arrowY > playY) {
-			rotateAngle = 90 - rotateAngle;
-		}
-		if(arrowX > playX && arrowY > playY) {
-			rotateAngle = -90 + rotateAngle;
-		}
-	}
-	
+
+
 	public void init() {
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -134,12 +129,9 @@ public class Tactics extends Activity {
 
 
 	private String readFromFile() {
-
 		String ret = "";
-
 		try {
 			InputStream inputStream = openFileInput("squad.txt");
-
 			if ( inputStream != null ) {
 				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -149,7 +141,6 @@ public class Tactics extends Activity {
 				while ( (receiveString = bufferedReader.readLine()) != null ) {
 					stringBuilder.append(receiveString);
 				}
-
 				inputStream.close();
 				ret = stringBuilder.toString();
 			}
@@ -159,18 +150,51 @@ public class Tactics extends Activity {
 		} catch (IOException e) {
 			Log.e("login activity", "Can not read file: " + e.toString());
 		}
-
 		return ret;
 	}
 
 
+	/*using right angle triangle trigonometry this calculates the angle
+	 * required to turn the arrow using inverse sine methodology */
+	public void rotateArrowToDirection() {
+		rotateAngle = 0;
+		float opposite = Math.abs(arrowX - playX);
+		float adjacent = Math.abs(arrowY - playY);
+		float hypotenuse = (float) Math.sqrt((opposite * opposite) + (adjacent * adjacent));
+		rotateAngle = (float) Math.asin(opposite/hypotenuse);
+		calculateCorrectQuadrantAndAngle(); 
+	}
+
+	/*This calls the 2 methods required to convert radians to degrees and
+	 * to add these to required degrees of given quadrant*/
+	public void calculateCorrectQuadrantAndAngle() {
+		convertRadiansToDegrees();
+		setQuadrant();
+	}
+
+	/*simple calculation to convert radians to degrees*/
+	public void convertRadiansToDegrees() {
+		rotateAngle = (float) ((rotateAngle * 180) /3.14);
+	}
+
+	/*tests to see where the second click occurs and adds appropriate degrees*/
+	public void setQuadrant() {
+		if((arrowY <= playY) && (arrowX <= playX)) {
+			rotateAngle = 90 + (90 - rotateAngle);
+		}
+		if(arrowX > playX && arrowY <= playY) {
+			rotateAngle = 180 + rotateAngle;
+		}
+		if(arrowX > playX && arrowY > playY) {
+			rotateAngle *= -1;
+		}
+	}
+
+	/*Draws the arrow to the screen and decodes and rotates the arrow image accordingly*/
 	public void drawTheArrow(float playX, float playY) {
 		int imageWidth = (int)w/17;
 		int imageHeight = (int)h/27;
 		ImageButton arrow = new ImageButton(this);
-	//	arrow.setBackgroundResource(R.drawable.arrowtactic);
-	//	arrow.getMeasuredWidth();
-	//	arrow.getMeasuredHeight();
 		arrow.setX(arrowX);
 		arrow.setY(arrowY);
 
@@ -180,21 +204,20 @@ public class Tactics extends Activity {
 		Matrix mat = new Matrix();
 		rotateArrowToDirection();
 		mat.postRotate(rotateAngle);
-		//mat.postRotate(180);
 		Bitmap bMapRotate = Bitmap.createBitmap(bMap, 0, 0,
-		                             bMap.getWidth(), bMap.getHeight(), mat, false);
-		//BitmapDrawable bmd = new BitmapDrawable(bMapRotate);
-		
+				bMap.getWidth(), bMap.getHeight(), mat, false);
+
 		arrow.setImageBitmap(bMapRotate);
 		// set alpha 45 removes transparency border of arrow
 		arrow.getBackground().setAlpha(45);
-	//	arrow.setImageDrawable(bmd);
-		
 		arrow.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
-		
 		squadLayout.addView(arrow);
 		setContentView(squadLayout);
 	}
+
+
+
+
 
 	public void showSquad() {
 		for(int i=0; i<playerPositions.length; i++) {
@@ -220,7 +243,7 @@ public class Tactics extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				playerButtons[1].setBackgroundResource(R.drawable.orb);
 				clickedId = 1;
 			}
 		});
@@ -229,7 +252,7 @@ public class Tactics extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				playerButtons[2].setBackgroundResource(R.drawable.orb);
 				clickedId = 2;
 			}
 		});
@@ -238,7 +261,7 @@ public class Tactics extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				playerButtons[3].setBackgroundResource(R.drawable.orb);
 				clickedId = 3;
 			}
 		});
@@ -247,7 +270,7 @@ public class Tactics extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				playerButtons[4].setBackgroundResource(R.drawable.orb);
 				clickedId = 4;
 			}
 		});
@@ -256,7 +279,7 @@ public class Tactics extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				playerButtons[5].setBackgroundResource(R.drawable.orb);
 				clickedId = 5;
 			}
 		});
@@ -265,16 +288,16 @@ public class Tactics extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				playerButtons[6].setBackgroundResource(R.drawable.orb);
 				clickedId = 6;
 			}
 		});
-		
+
 		playerButtons[7].setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				playerButtons[7].setBackgroundResource(R.drawable.orb);
 				clickedId = 7;
 			}
 		});
@@ -283,7 +306,7 @@ public class Tactics extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				playerButtons[8].setBackgroundResource(R.drawable.orb);
 				clickedId = 8;
 			}
 		});
@@ -292,7 +315,7 @@ public class Tactics extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				playerButtons[9].setBackgroundResource(R.drawable.orb);
 				clickedId = 9;
 			}
 		});
@@ -301,7 +324,7 @@ public class Tactics extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				playerButtons[10].setBackgroundResource(R.drawable.orb);
 				clickedId = 10;
 			}
 		});
