@@ -48,7 +48,7 @@ public class Tactics extends Activity implements Runnable {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (clickedId != 0 && event.getAction() == MotionEvent.ACTION_DOWN){
-					playerButtons[clickedId].setBackgroundResource(R.drawable.orb2);
+					
 					arrowX = event.getX() - distortionX;
 					arrowY = event.getY() - distortionY;
 					playX = playerButtons[clickedId].getX();
@@ -59,12 +59,14 @@ public class Tactics extends Activity implements Runnable {
 					int distanceX = (int)(Math.abs(playX - arrowX))/100;
 					int distanceY = (int)(Math.abs(playY - arrowY))/100;
 					
+					//playerButtons[clickedId].setOnClickListener(null);
 					TranslateAnimation animation = new TranslateAnimation(0, arrowX-playX, 0, arrowY - playY);
 					animation.setDuration(2000); // duartion in ms
 					//if this is set to true it will keep final position I think
 					animation.setFillAfter(false);
 					animation.setRepeatCount(10);
 					playerButtons[clickedId].startAnimation(animation);
+					playerButtons[clickedId].setBackgroundResource(R.drawable.orb2);
 					clickedId = 0;
 					
 					return true;
@@ -227,8 +229,8 @@ public class Tactics extends Activity implements Runnable {
 			player.setX((float) p.xPos);
 			player.setY((float) p.yPos);
 			player.setTag(tags[i]);
-			int imageWidth = (int)w/17;
-			int imageHeight = (int)h/27;
+			int imageWidth = (int)w/12;
+			int imageHeight = (int)h/22;
 			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
 			squadLayout.addView(player);
 			setContentView(squadLayout);

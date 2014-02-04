@@ -1,7 +1,6 @@
 package com.example.fyp_footballmanager;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -30,14 +30,13 @@ public class Squad extends Activity {
 	private int _yDelta;
 	String[] tags = {"gk", "rb", "cb", "cb2", "lb", "rm", "cm", "cm2", "lm", "rf", "lf"};
 	String contents;
-	Button reset;
+	Button reset, save;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
-
 		init();		
 	}
-
 	
 	/*Initialises helper variables and sets Content View*/
 	public void init() {
@@ -49,13 +48,12 @@ public class Squad extends Activity {
 		View contentView = mInflater.inflate(R.layout.activity_squad, null); 
 		squadLayout = (RelativeLayout) contentView.findViewById(R.id.fullSquadLayoutActivitySquad);
 		setContentView(squadLayout);
-		reset = (Button) squadLayout.findViewById(R.id.reset);	
-/*IDEALLY HERE SHOULD HAVE THE FILE CHECK TO SEE IF THERE IS A CURRENT DEFAULT SQUAD SET*/
-		
+		reset = (Button) squadLayout.findViewById(R.id.reset);
+		save = (Button) squadLayout.findViewById(R.id.save);
+	
 		contents = readFromFile();
 		if(contents.equals("") || contents.equals(null)) {
 			setDefaultSquad();
-			contents = readFromFile();
 		}
 		copyCoordinatesFromFile();
 		addPlayersToScreen();
@@ -165,10 +163,6 @@ public class Squad extends Activity {
 		return ret;
 	}
 
-	
-	
-
-
 
 	/*This is the DEFAULT SQUAD setup if a default is not chosen*/
 	public void setDefaultSquad() {
@@ -203,6 +197,7 @@ public class Squad extends Activity {
 	public void updateReferencesToButtons() {
 		for(int i=0; i<playerButtons.length; i++) {
 			playerButtons[i] = (ImageButton) squadLayout.findViewWithTag(tags[i]);
+			playerButtons[i].setId(i);
 		}
 	}
 
@@ -218,11 +213,10 @@ public class Squad extends Activity {
 			player.setX((float) p.xPos);
 			player.setY((float) p.yPos);
 			player.setTag(tags[i]);
-			int imageWidth = (int)w/17;
-			int imageHeight = (int)h/27;
+			int imageWidth = (int)w/12;
+			int imageHeight = (int)h/22;
 			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
 			squadLayout.addView(player);
-			//playerButtons[i] = player;
 		}
 		updateReferencesToButtons();
 		setContentView(squadLayout);
@@ -236,385 +230,67 @@ public class Squad extends Activity {
 		}
 	}
 
+	
+	
+	
+	public class squadMoveListener implements OnTouchListener {
+	    @Override
+	    public boolean onTouch(View v, MotionEvent event) {
+	        int id = v.getId();
+	        final int X = (int) event.getRawX();
+			final int Y = (int) event.getRawY();
+			switch (event.getAction() & MotionEvent.ACTION_MASK) {
+			case MotionEvent.ACTION_DOWN:
+				RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) v.getLayoutParams();
+				_xDelta = X - lParams.leftMargin;
+				_yDelta = Y - lParams.topMargin;
+				playerButtons[id].setBackgroundResource(R.drawable.orb);
+				break;
+			case MotionEvent.ACTION_UP:
+				playerButtons[id].setBackgroundResource(R.drawable.orb2);
+				updateReferencesToButtons();
+				break;
+			case MotionEvent.ACTION_POINTER_DOWN:
+				playerButtons[id].setBackgroundResource(R.drawable.orb);
+				break;
+			case MotionEvent.ACTION_POINTER_UP:	
+				playerButtons[id].setBackgroundResource(R.drawable.orb2);
+				updateReferencesToButtons();
+				break;
+			case MotionEvent.ACTION_MOVE:
+				RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) v.getLayoutParams();
+				layoutParams.leftMargin = X - _xDelta;
+				layoutParams.topMargin = Y - _yDelta;
+				layoutParams.rightMargin = -250;
+				layoutParams.bottomMargin = -250;
+				playerButtons[id].setLayoutParams(layoutParams);
+				playerButtons[id].setBackgroundResource(R.drawable.orb);
+				break;
+			}
+	        return true;
+	    }
 
+	}
+	
+	
+	
 	public void setOnClickListenersForAllPlayers() {
 
-		playerButtons[1].setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View view, MotionEvent event) {
-				final int X = (int) event.getRawX();
-				final int Y = (int) event.getRawY();
-				switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					_xDelta = X - lParams.leftMargin;
-					_yDelta = Y - lParams.topMargin;
-					playerButtons[1].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_UP:
-					playerButtons[1].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[1].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[1].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					layoutParams.leftMargin = X - _xDelta;
-					layoutParams.topMargin = Y - _yDelta;
-					layoutParams.rightMargin = -250;
-					layoutParams.bottomMargin = -250;
-					playerButtons[1].setLayoutParams(layoutParams);
-					playerButtons[1].setBackgroundResource(R.drawable.orb);
-					break;
-				}
-				return true;
-			}});
-
-		playerButtons[2].setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View view, MotionEvent event) {
-				final int X = (int) event.getRawX();
-				final int Y = (int) event.getRawY();
-				switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					_xDelta = X - lParams.leftMargin;
-					_yDelta = Y - lParams.topMargin;
-					playerButtons[2].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_UP:
-					playerButtons[2].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[2].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[2].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					layoutParams.leftMargin = X - _xDelta;
-					layoutParams.topMargin = Y - _yDelta;
-					layoutParams.rightMargin = -250;
-					layoutParams.bottomMargin = -250;
-					playerButtons[2].setLayoutParams(layoutParams);
-					playerButtons[2].setBackgroundResource(R.drawable.orb);
-					break;
-				}
-				return true;
-			}});
-
-		playerButtons[3].setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View view, MotionEvent event) {
-				final int X = (int) event.getRawX();
-				final int Y = (int) event.getRawY();
-				switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					_xDelta = X - lParams.leftMargin;
-					_yDelta = Y - lParams.topMargin;
-					playerButtons[3].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_UP:
-					playerButtons[3].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[3].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[3].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					layoutParams.leftMargin = X - _xDelta;
-					layoutParams.topMargin = Y - _yDelta;
-					layoutParams.rightMargin = -250;
-					layoutParams.bottomMargin = -250;
-					playerButtons[3].setLayoutParams(layoutParams);
-					playerButtons[3].setBackgroundResource(R.drawable.orb);
-					break;
-				}
-				return true;
-			}});
-
-		playerButtons[4].setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View view, MotionEvent event) {
-				final int X = (int) event.getRawX();
-				final int Y = (int) event.getRawY();
-				switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					_xDelta = X - lParams.leftMargin;
-					_yDelta = Y - lParams.topMargin;
-					playerButtons[4].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_UP:
-					playerButtons[4].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[4].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[4].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					layoutParams.leftMargin = X - _xDelta;
-					layoutParams.topMargin = Y - _yDelta;
-					layoutParams.rightMargin = -250;
-					layoutParams.bottomMargin = -250;
-					playerButtons[4].setLayoutParams(layoutParams);
-					playerButtons[4].setBackgroundResource(R.drawable.orb);
-					break;
-				}
-				return true;
-			}});
-
-		playerButtons[5].setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View view, MotionEvent event) {
-				final int X = (int) event.getRawX();
-				final int Y = (int) event.getRawY();
-				switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					_xDelta = X - lParams.leftMargin;
-					_yDelta = Y - lParams.topMargin;
-					playerButtons[5].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_UP:
-					playerButtons[5].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[5].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[5].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					layoutParams.leftMargin = X - _xDelta;
-					layoutParams.topMargin = Y - _yDelta;
-					layoutParams.rightMargin = -250;
-					layoutParams.bottomMargin = -250;
-					playerButtons[5].setLayoutParams(layoutParams);
-					playerButtons[5].setBackgroundResource(R.drawable.orb);
-					break;
-				}
-				return true;
-			}});
-
-		playerButtons[6].setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View view, MotionEvent event) {
-				final int X = (int) event.getRawX();
-				final int Y = (int) event.getRawY();
-				switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					_xDelta = X - lParams.leftMargin;
-					_yDelta = Y - lParams.topMargin;
-					playerButtons[6].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_UP:
-					playerButtons[6].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[6].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[6].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					layoutParams.leftMargin = X - _xDelta;
-					layoutParams.topMargin = Y - _yDelta;
-					layoutParams.rightMargin = -250;
-					layoutParams.bottomMargin = -250;
-					playerButtons[6].setLayoutParams(layoutParams);
-					playerButtons[6].setBackgroundResource(R.drawable.orb);
-					break;
-				}
-				return true;
-			}});
-
-		playerButtons[7].setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View view, MotionEvent event) {
-				final int X = (int) event.getRawX();
-				final int Y = (int) event.getRawY();
-				switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					_xDelta = X - lParams.leftMargin;
-					_yDelta = Y - lParams.topMargin;
-					playerButtons[7].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_UP:
-					playerButtons[7].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[7].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[7].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					layoutParams.leftMargin = X - _xDelta;
-					layoutParams.topMargin = Y - _yDelta;
-					layoutParams.rightMargin = -250;
-					layoutParams.bottomMargin = -250;
-					playerButtons[7].setLayoutParams(layoutParams);
-					playerButtons[7].setBackgroundResource(R.drawable.orb);
-					break;
-				}
-				return true;
-			}});
-
-		playerButtons[8].setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View view, MotionEvent event) {
-				final int X = (int) event.getRawX();
-				final int Y = (int) event.getRawY();
-				switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					_xDelta = X - lParams.leftMargin;
-					_yDelta = Y - lParams.topMargin;
-					playerButtons[8].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_UP:
-					playerButtons[8].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[8].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[8].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					layoutParams.leftMargin = X - _xDelta;
-					layoutParams.topMargin = Y - _yDelta;
-					layoutParams.rightMargin = -250;
-					layoutParams.bottomMargin = -250;
-					playerButtons[8].setLayoutParams(layoutParams);
-					playerButtons[8].setBackgroundResource(R.drawable.orb);
-					break;
-				}
-				return true;
-			}});
-
-		playerButtons[9].setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View view, MotionEvent event) {
-				final int X = (int) event.getRawX();
-				final int Y = (int) event.getRawY();
-				switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					_xDelta = X - lParams.leftMargin;
-					_yDelta = Y - lParams.topMargin;
-					playerButtons[9].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_UP:
-					playerButtons[9].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[9].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[9].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					layoutParams.leftMargin = X - _xDelta;
-					layoutParams.topMargin = Y - _yDelta;
-					layoutParams.rightMargin = -250;
-					layoutParams.bottomMargin = -250;
-					playerButtons[9].setLayoutParams(layoutParams);
-					playerButtons[9].setBackgroundResource(R.drawable.orb);
-					break;
-				}
-				return true;
-			}});
-
-		playerButtons[10].setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View view, MotionEvent event) {
-				final int X = (int) event.getRawX();
-				final int Y = (int) event.getRawY();
-				switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					_xDelta = X - lParams.leftMargin;
-					_yDelta = Y - lParams.topMargin;
-					playerButtons[10].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_UP:
-					playerButtons[10].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_POINTER_DOWN:
-					playerButtons[10].setBackgroundResource(R.drawable.orb);
-					break;
-				case MotionEvent.ACTION_POINTER_UP:	
-					playerButtons[10].setBackgroundResource(R.drawable.orb2);
-					updateReferencesToButtons();
-					saveFormationToFile();
-					break;
-				case MotionEvent.ACTION_MOVE:
-					RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-					layoutParams.leftMargin = X - _xDelta;
-					layoutParams.topMargin = Y - _yDelta;
-					layoutParams.rightMargin = -250;
-					layoutParams.bottomMargin = -250;
-					playerButtons[10].setLayoutParams(layoutParams);
-					playerButtons[10].setBackgroundResource(R.drawable.orb);
-					break;
-				}
-				return true;
-			}});
-		
+		for(int i=1; i<playerButtons.length; i++) {
+			playerButtons[i].setOnTouchListener(new squadMoveListener());
+		}
 		
 		reset.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				resetSquadToDefault();
+			}
+		});
+		
+		save.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				saveFormationToFile();
 			}
 		});
 	}

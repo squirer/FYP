@@ -22,18 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/Squad"
-        android:layout_below="@+id/Fixtures"
-        android:layout_marginTop="57dp"
-        android:text="Tactics" />
-
-    <Button
-        android:id="@+id/Fixtures"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/Squad"
         android:layout_below="@+id/Squad"
         android:layout_marginTop="57dp"
-        android:text="Fixtures" />
+        android:text="Tactics" />
 
     <Button
         android:id="@+id/About"
