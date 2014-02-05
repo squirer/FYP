@@ -11,24 +11,26 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 public class Squad extends Activity {
 
-	ImageButton[] playerButtons = new ImageButton[11]; 
+	Button[] playerButtons = new Button[11];
+	Button[] textualIds = new Button[11];
+	
 	PlayerCoordinate[] allPositions = new PlayerCoordinate[11];
 	RelativeLayout squadLayout;
 	float h, w;
 	int clickedButton;
 	private int _xDelta;
 	private int _yDelta;
-	String[] tags = {"gk", "rb", "cb", "cb2", "lb", "rm", "cm", "cm2", "lm", "rf", "lf"};
+	String[] tags = {"GK", "RB", "CB", "CB2", "LB", "RM", "CM", "CM2", "LM", "RS", "LS"};
 	String contents;
 	Button reset, save;
 	
@@ -61,6 +63,7 @@ public class Squad extends Activity {
 		setOnClickListenersForAllPlayers();
 	}
 	
+
 
 	/*calls setDefault() Method and returns screen to 4-4-2 formation*/
 	public void resetSquadToDefault() {	
@@ -177,7 +180,7 @@ public class Squad extends Activity {
 	/*This ensures buttons have a valid reference which is up to date*/
 	public void updateReferencesToButtons() {
 		for(int i=0; i<playerButtons.length; i++) {
-			playerButtons[i] = (ImageButton) squadLayout.findViewWithTag(tags[i]);
+			playerButtons[i] = (Button) squadLayout.findViewWithTag(tags[i]);
 			playerButtons[i].setId(i);
 		}
 	}
@@ -188,15 +191,18 @@ public class Squad extends Activity {
 	public void addPlayersToScreen() {
 
 		for(int i=0; i<allPositions.length; i++) {
+			
 			PlayerCoordinate p = allPositions[i];
-			ImageButton player = new ImageButton(this);
+			Button player = new Button(this);
 			player.setBackgroundResource(R.drawable.orb2);
 			player.setX((float) p.xPos);
 			player.setY((float) p.yPos);
 			player.setTag(tags[i]);
-			int imageWidth = (int)w/12;
-			int imageHeight = (int)h/22;
+			int imageWidth = (int) ((int)w/9.2);
+			int imageHeight = (int)h/20;
 			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
+			player.setText(tags[i]);
+			player.setTextSize(TypedValue.COMPLEX_UNIT_PX, 20); 
 			squadLayout.addView(player);
 		}
 		updateReferencesToButtons();
