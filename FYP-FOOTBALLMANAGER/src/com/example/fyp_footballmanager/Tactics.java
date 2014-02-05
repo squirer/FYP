@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import com.example.fyp_footballmanager.Squad.squadMoveListener;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -37,12 +41,13 @@ public class Tactics extends Activity implements Runnable {
 	String[] tags = {"gk", "rb", "cb", "cb2", "lb", "rm", "cm", "cm2", "lm", "rf", "lf"};
 	PlayerCoordinate[] playerPositions;
 	String savedFormation="";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		init();
-		setClickListenersForPlayers();
+		setOnClickListenersForAllPlayers();
 
 		squadLayout.setOnTouchListener(new View.OnTouchListener() {
 			@Override
@@ -63,8 +68,10 @@ public class Tactics extends Activity implements Runnable {
 					TranslateAnimation animation = new TranslateAnimation(0, arrowX-playX, 0, arrowY - playY);
 					animation.setDuration(2000); // duartion in ms
 					//if this is set to true it will keep final position I think
-					animation.setFillAfter(false);
-					animation.setRepeatCount(10);
+					//animation.setFillAfter(false);
+					//animation.setFillEnabled(true);
+					animation.setFillAfter(true);
+					animation.setRepeatCount(3);
 					playerButtons[clickedId].startAnimation(animation);
 					playerButtons[clickedId].setBackgroundResource(R.drawable.orb2);
 					clickedId = 0;
@@ -108,6 +115,7 @@ public class Tactics extends Activity implements Runnable {
 	public void setReferencesToButtons() {
 		for(int i=0; i<playerButtons.length; i++) {
 			playerButtons[i] = (ImageButton) squadLayout.findViewWithTag(tags[i]);
+			playerButtons[i].setId(i);
 		}
 	}
 
@@ -218,9 +226,7 @@ public class Tactics extends Activity implements Runnable {
 	}
 
 
-
-
-
+	
 	public void showSquad() {
 		for(int i=0; i<playerPositions.length; i++) {
 			PlayerCoordinate p = playerPositions[i];
@@ -234,101 +240,37 @@ public class Tactics extends Activity implements Runnable {
 			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
 			squadLayout.addView(player);
 			setContentView(squadLayout);
-
-			setReferencesToButtons();
 		}
+		setReferencesToButtons();
 	}
 
 
-	public void setClickListenersForPlayers() {
-		playerButtons[1].setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				playerButtons[1].setBackgroundResource(R.drawable.orb);
-				clickedId = 1;
-			}
-		});
+	public void setColoursOriginal() {
+		for(int i=0; i<playerButtons.length; i++) {
+			playerButtons[i].setBackgroundResource(R.drawable.orb2);
+		}
+	}
+	
+	
+	
+	public class playerTouchListener implements OnTouchListener {
+	    @Override
+	    public boolean onTouch(View v, MotionEvent event) {
+	        clickedId = v.getId();
+	        setColoursOriginal();
+	        playerButtons[clickedId].setBackgroundResource(R.drawable.orb);
+	        return true;
+	    }
 
-		playerButtons[2].setOnClickListener(new View.OnClickListener() {
+	}
+	
+	
+	/*sets all clickListeners for all squad and save andd reset buttons*/
+	public void setOnClickListenersForAllPlayers() {
 
-			@Override
-			public void onClick(View v) {
-				playerButtons[2].setBackgroundResource(R.drawable.orb);
-				clickedId = 2;
-			}
-		});
-
-		playerButtons[3].setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				playerButtons[3].setBackgroundResource(R.drawable.orb);
-				clickedId = 3;
-			}
-		});
-
-		playerButtons[4].setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				playerButtons[4].setBackgroundResource(R.drawable.orb);
-				clickedId = 4;
-			}
-		});
-
-		playerButtons[5].setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				playerButtons[5].setBackgroundResource(R.drawable.orb);
-				clickedId = 5;
-			}
-		});
-
-		playerButtons[6].setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				playerButtons[6].setBackgroundResource(R.drawable.orb);
-				clickedId = 6;
-			}
-		});
-
-		playerButtons[7].setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				playerButtons[7].setBackgroundResource(R.drawable.orb);
-				clickedId = 7;
-			}
-		});
-
-		playerButtons[8].setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				playerButtons[8].setBackgroundResource(R.drawable.orb);
-				clickedId = 8;
-			}
-		});
-
-		playerButtons[9].setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				playerButtons[9].setBackgroundResource(R.drawable.orb);
-				clickedId = 9;
-			}
-		});
-
-		playerButtons[10].setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				playerButtons[10].setBackgroundResource(R.drawable.orb);
-				clickedId = 10;
-			}
-		});
+		for(int i=1; i<playerButtons.length; i++) {
+			playerButtons[i].setOnTouchListener(new playerTouchListener());
+		}
 	}
 }

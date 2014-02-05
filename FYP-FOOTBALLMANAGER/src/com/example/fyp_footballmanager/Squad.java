@@ -62,6 +62,7 @@ public class Squad extends Activity {
 	}
 	
 
+	/*calls setDefault() Method and returns screen to 4-4-2 formation*/
 	public void resetSquadToDefault() {	
 		setDefaultSquad();
 		for(int i=0; i<playerButtons.length; i++) {
@@ -117,7 +118,7 @@ public class Squad extends Activity {
 	}
 
 
-	/*reads from the squadFile*/
+	/*reads from the squad text file of player positions*/
 	private String readFromFile() {
 		String ret = "";
 		try {
@@ -132,34 +133,14 @@ public class Squad extends Activity {
 				while ( (receiveString = bufferedReader.readLine()) != null ) {
 					stringBuilder.append(receiveString);
 				}
-
 				inputStream.close();
 				ret = stringBuilder.toString();
 			}
-		}
-		
+		}	
 		catch (FileNotFoundException e) {
-			Log.e("login activity", "File not found: " + e.toString());
-			ImageButton ERROR = new ImageButton(this);
-			ERROR.setBackgroundResource(R.drawable.arrowtactic);
-			ERROR.setX((float) w/2);
-			ERROR.setY((float) h - 15);
-			int imageWidth = (int)w/20;
-			int imageHeight = (int)h/30;
-			ERROR.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
-			squadLayout.addView(ERROR);
-		} catch (IOException e) {
-			Log.e("login activity", "Can not read file: " + e.toString());
-			ImageButton ERROR = new ImageButton(this);
-			ERROR.setBackgroundResource(R.drawable.arrowtactic);
-			ERROR.setX((float) w/2);
-			ERROR.setY((float) h - 15);
-			int imageWidth = (int)w/20;
-			int imageHeight = (int)h/30;
-			ERROR.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
-			squadLayout.addView(ERROR);
+		} 
+		catch (IOException e) {
 		}
-
 		return ret;
 	}
 
@@ -232,7 +213,8 @@ public class Squad extends Activity {
 
 	
 	
-	
+	/*moves a squad member based on which one has been selected by ID
+	 * changes colour of squad member during dragging and release*/
 	public class squadMoveListener implements OnTouchListener {
 	    @Override
 	    public boolean onTouch(View v, MotionEvent event) {
@@ -273,7 +255,7 @@ public class Squad extends Activity {
 	}
 	
 	
-	
+	/*sets all clickListeners for all squad and save andd reset buttons*/
 	public void setOnClickListenersForAllPlayers() {
 
 		for(int i=1; i<playerButtons.length; i++) {
