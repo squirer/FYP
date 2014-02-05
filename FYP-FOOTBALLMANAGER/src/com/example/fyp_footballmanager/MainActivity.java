@@ -54,8 +54,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-			/*	try{
+				try{
 					Class<?> ourClass = Class.forName("com.example.fyp_footballmanager." + "About" );
 					Intent ourIntent = new Intent(MainActivity.this, ourClass);
 					startActivity(ourIntent);
@@ -63,7 +62,6 @@ public class MainActivity extends Activity {
 				catch(ClassNotFoundException e){
 					e.printStackTrace();
 				}
-				*/
 			}
 		});
 	}

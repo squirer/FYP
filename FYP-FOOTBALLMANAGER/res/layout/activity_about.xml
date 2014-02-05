@@ -3,7 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-     android:background="@drawable/mainbackground">
+    >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 
+       <TextView android:id="@+id/text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="  INSTRUCTIONS \n \n              Welcome to squad management!
+  \n  \n   The following are some of the basic instructions on how to use this football management app. They are broken down into headings with Squad screen where you create your very own unique formations, Tactic screen where you generate differenttactics and animation on where players should be at a given time and the overall goal of this appliction is to make your life as a manager much easier!                
+  \n  \n  \n          The Squad screen \n  \n 
+ Within the squad screen you can create formations by  moving players around the screen. Simply hold down a   particular player and move them to a desired position.   After making your changes don't forget to hit the save button at the bottom right hand corner of the screen to make the changes permanent! If you want to return players to the default 4-4-2 formation - simply hit the Rest button in the bottom left hand corner of the screen.
+ \n 
+ \n
+ \n                   The Tactics screen \n \n
+ After creating your own squad formation you can then go into your Tactic screen. This is used to demonstrate to Players the positions they are supposed to move in during a particular play. To animate a player simply select one on screen and then tap a position you want them to move to. This will generate the animation of a player moving to this location and an arrow placed on screen.
+ \n \n Good luck in your career as a complete football manager!  \n \n "     />
+    </ScrollView>
+
     
 
 </LinearLayout>

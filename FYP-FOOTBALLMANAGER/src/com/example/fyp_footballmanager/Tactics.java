@@ -225,9 +225,10 @@ public class Tactics extends Activity implements Runnable {
 			player.setY((float) p.yPos);
 			player.setText(tags[i]);
 			player.setTag(tags[i]);
-			player.setTextSize(TypedValue.COMPLEX_UNIT_PX, 20); 
-			int imageWidth = (int) ((int)w/9.2);
+			int imageWidth = (int) w/10;
 			int imageHeight = (int)h/20;
+			player.setTextSize(TypedValue.COMPLEX_UNIT_PX, imageWidth/6); 
+			
 			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
 			squadLayout.addView(player);
 			setContentView(squadLayout);

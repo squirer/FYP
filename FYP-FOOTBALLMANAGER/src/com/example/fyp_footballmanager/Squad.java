@@ -198,11 +198,11 @@ public class Squad extends Activity {
 			player.setX((float) p.xPos);
 			player.setY((float) p.yPos);
 			player.setTag(tags[i]);
-			int imageWidth = (int) ((int)w/9.2);
+			int imageWidth = (int) w/10;
 			int imageHeight = (int)h/20;
 			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
 			player.setText(tags[i]);
-			player.setTextSize(TypedValue.COMPLEX_UNIT_PX, 20); 
+			player.setTextSize(TypedValue.COMPLEX_UNIT_PX, imageWidth/6); 
 			squadLayout.addView(player);
 		}
 		updateReferencesToButtons();
