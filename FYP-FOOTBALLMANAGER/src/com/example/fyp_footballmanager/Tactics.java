@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,12 +20,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-public class Tactics extends Activity implements Runnable {
+public class Tactics extends Activity {//implements Runnable {
 
 	RelativeLayout squadLayout;
 	float arrowX;
@@ -35,7 +40,11 @@ public class Tactics extends Activity implements Runnable {
 	float distortionY;
 	float h,w;
 	int clickedId;
-
+	AnimationSet a;
+	Button animate;
+	List <Integer>ids;
+	Iterator<Integer> idIterator;
+	
 	Button[] playerButtons = new Button[11];
 	String[] tags = {"GK", "RB", "CB", "CB2", "LB", "RM", "CM", "CM2", "LM", "RS", "LS"};
 	PlayerCoordinate[] playerPositions;
@@ -44,7 +53,7 @@ public class Tactics extends Activity implements Runnable {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+         
 		init();
 		setOnClickListenersForAllPlayers();
 
@@ -52,20 +61,22 @@ public class Tactics extends Activity implements Runnable {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (clickedId != 0 && event.getAction() == MotionEvent.ACTION_DOWN){
-
 					arrowX = event.getX() - distortionX;
 					arrowY = event.getY() - distortionY;
 					playX = playerButtons[clickedId].getX();
 					playY = playerButtons[clickedId].getY();
 					drawTheArrow(playX, playY);
-
+					
 					TranslateAnimation animation = new TranslateAnimation(0, arrowX-playX-((w/17)/2), 0, arrowY -playY);
 					animation.setDuration(2000); 
-					animation.setRepeatCount(3);
-					playerButtons[clickedId].startAnimation(animation);
+					animation.setRepeatCount(15);
+					
+					a.addAnimation(animation);
+					ids.add(clickedId);
+					//playerButtons[clickedId].startAnimation(animation);
 					playerButtons[clickedId].setBackgroundResource(R.drawable.orb2);
+					printInformation();
 					clickedId = 0;
-
 					return true;
 				}
 				return false;
@@ -74,15 +85,12 @@ public class Tactics extends Activity implements Runnable {
 	}
 
 
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	/*Calls helper method to initialise this screen*/
 	public void init() {
+		a = new AnimationSet(true);
+		ids = new ArrayList<Integer>();
+		
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 		h = displaymetrics.heightPixels;
@@ -92,6 +100,7 @@ public class Tactics extends Activity implements Runnable {
 		LayoutInflater mInflater = LayoutInflater.from(this);  
 		View contentView = mInflater.inflate(R.layout.activity_tactics, null); 
 		squadLayout = (RelativeLayout) contentView.findViewById(R.id.fullSquadLayout);
+		animate = (Button)squadLayout.findViewById(R.id.animate);
 		savedFormation = readFromFile();
 		copyCoordinatesFromFile(savedFormation);
 		showSquad();
@@ -257,10 +266,47 @@ public class Tactics extends Activity implements Runnable {
 
 	}
 
+	
+	public void startAnimation() {
+		Integer tempPlayerId;
+		Animation tempAnimation;
+		List<Animation> allAnimations = a.getAnimations();
+		Iterator<Animation> animationsIterator = allAnimations.iterator();
+		
+		tempPlayerId = idIterator.next();
+		tempAnimation = animationsIterator.next();
+		playerButtons[tempPlayerId].startAnimation(tempAnimation);
+/*		while(idIterator.hasNext()) {
+			tempPlayerId = idIterator.next();
+			tempAnimation = animationsIterator.next();
+			playerButtons[tempPlayerId].startAnimation(tempAnimation);
+		}
+*/
+	}
+	
+	
+	public void printInformation() {
+		idIterator = ids.iterator(); 
+		List<Animation> allAnimations = a.getAnimations();
+		Iterator<Animation> animationsIterator = allAnimations.iterator();
+		while(idIterator.hasNext()) {
+			//Log.e("id: ", ""+idIterator.next());
+			playerButtons[idIterator.next()].startAnimation(animationsIterator.next());
+		}
+	}
+	
 	/*sets all clickListeners for all squad and save andd reset buttons*/
 	public void setOnClickListenersForAllPlayers() {
 		for(int i=1; i<playerButtons.length; i++) {
 			playerButtons[i].setOnTouchListener(new playerTouchListener());
 		}
+		
+		animate.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				///startAnimation();
+				printInformation();
+			}
+		});
 	}
 }

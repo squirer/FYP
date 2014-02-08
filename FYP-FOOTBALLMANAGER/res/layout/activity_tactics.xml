@@ -5,103 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" 
      android:background="@drawable/footballpitch">
-   <!-- android:background="@drawable/mainbackground"> -->  
-    
-<!-- 
-     <ImageButton
-        android:id="@+id/goalkeeper"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp"
-        android:src="@drawable/playericon" />
 
-    <ImageButton
-        android:id="@+id/leftstriker"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+    <Button
+        android:id="@+id/animate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="29dp"
-        android:layout_marginTop="110dp"
-        android:layout_toLeftOf="@+id/goalkeeper"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/rightstriker"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignTop="@+id/leftstriker"
-        android:layout_marginLeft="42dp"
-        android:layout_toRightOf="@+id/leftstriker"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/leftmid"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="32dp"
-        android:layout_toLeftOf="@+id/leftstriker"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/centerLmid"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignTop="@+id/leftmid"
-        android:layout_toLeftOf="@+id/rightstriker"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/centerRmid"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignLeft="@+id/rightstriker"
-        android:layout_alignTop="@+id/centerLmid"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/rightMid"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignTop="@+id/centerRmid"
-        android:layout_marginLeft="45dp"
-        android:layout_toRightOf="@+id/centerRmid"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/leftdefender"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_above="@+id/goalkeeper"
-        android:layout_marginBottom="67dp"
-        android:layout_toLeftOf="@+id/leftmid"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/centerLdefender"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignLeft="@+id/leftstriker"
-        android:layout_alignTop="@+id/leftdefender"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/rightdefender"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignLeft="@+id/rightMid"
-        android:layout_alignTop="@+id/leftdefender"
-        android:src="@drawable/playericon" />
-
-    <ImageButton
-        android:id="@+id/centerRdefender"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignTop="@+id/centerLdefender"
-        android:layout_toLeftOf="@+id/rightMid"
-        android:src="@drawable/playericon" />
- --> 
+        android:text="Button" />
+ 
 </RelativeLayout>
