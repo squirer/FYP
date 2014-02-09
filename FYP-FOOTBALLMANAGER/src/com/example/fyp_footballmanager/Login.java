@@ -31,8 +31,8 @@ public class Login extends Activity {
 	public void Logging_in(View view)
 	{	
 		/* check log-in details */		
-		EditText username_field = (EditText) findViewById(R.id.editText1);
-		EditText password_field= (EditText) findViewById(R.id.editText2);
+		EditText username_field = (EditText) findViewById(R.id.editusername);
+		EditText password_field= (EditText) findViewById(R.id.editpassword);
 		
 		String username = username_field.getText().toString();
 		String password = password_field.getText().toString();
