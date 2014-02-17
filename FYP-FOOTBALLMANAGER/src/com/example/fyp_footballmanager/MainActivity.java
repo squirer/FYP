@@ -49,7 +49,6 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		
 		about.setOnClickListener(new View.OnClickListener() {
 
 			@Override

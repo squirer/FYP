@@ -7,13 +7,11 @@
      android:background="@drawable/footballpitch">
 
     <Button
-        android:id="@+id/animate"
+        android:id="@+id/cleartactics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="22dp"
-        android:layout_marginRight="53dp"
-        android:text="Button" />
+        android:layout_centerHorizontal="true"
+        android:text="Clear!" />
  
 </RelativeLayout>

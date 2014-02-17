@@ -25,7 +25,6 @@ public class Login extends Activity {
 	
 	public void Sign_up_page(View view)
 	{
-	
 	}
 	
 	public void Logging_in(View view)

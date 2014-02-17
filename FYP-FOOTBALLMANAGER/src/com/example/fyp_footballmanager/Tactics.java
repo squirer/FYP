@@ -8,9 +8,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -30,7 +29,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 public class Tactics extends Activity {
-	
+
 	RelativeLayout squadLayout;
 	float arrowX;
 	float arrowY;
@@ -45,19 +44,37 @@ public class Tactics extends Activity {
 	AnimationSet a;
 	List <Integer>ids;
 	Iterator<Integer> idIterator;
-	
+
 	Button[] playerButtons = new Button[11];
 	String[] tags = {"GK", "RB", "CB", "CB2", "LB", "RM", "CM", "CM2", "LM", "RS", "LS"};
 	PlayerCoordinate[] playerPositions;
 	String savedFormation="";
-
+	Button clear;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-         
+		
 		init();
 		setOnClickListenersForAllPlayers();
 
+		
+		clear.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//Tactics t = new Tactics();
+				Class<?> ourClass;
+				try {
+					ourClass = Class.forName("com.example.fyp_footballmanager." + "Tactics" );
+					Intent ourIntent = new Intent(Tactics.this, ourClass);
+					startActivity(ourIntent);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
 		squadLayout.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -67,15 +84,21 @@ public class Tactics extends Activity {
 					playX = playerButtons[clickedId].getX();
 					playY = playerButtons[clickedId].getY();
 					drawTheArrow(playX, playY);
-					
+
 					TranslateAnimation animation = new TranslateAnimation(0, arrowX-playX-((w/17)/2), 0, arrowY -playY);
 					animation.setDuration(4000); 
 					animation.setRepeatCount(5);
-					
+
 					a.addAnimation(animation);
 					ids.add(clickedId);
-					playerButtons[clickedId].setBackgroundResource(R.drawable.orb2);
-					printInformation();
+					playerButtons[clickedId].setBackgroundResource(R.drawable.orb2);							
+					animatePlayers();
+					// problem was that i was changing the onClickListener
+					// and this was established as a new onTouchListner
+					/*
+					playerButtons[clickedId].setOnTouchListener(null);
+					playerButtons[clickedId].setClickable(false);
+					 */
 					clickedId = 0;
 					return true;
 				}
@@ -85,12 +108,12 @@ public class Tactics extends Activity {
 	}
 
 
-	
+
 	/*Calls helper method to initialise this screen*/
 	public void init() {
 		a = new AnimationSet(true);
 		ids = new ArrayList<Integer>();
-		
+
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 		h = displaymetrics.heightPixels;
@@ -104,6 +127,7 @@ public class Tactics extends Activity {
 		copyCoordinatesFromFile(savedFormation);
 		showSquad();
 		setContentView(squadLayout);
+		clear  = (Button) findViewById(R.id.cleartactics);
 	}
 
 	/*updates the references to Buttons finding them based on their tags previously set*/
@@ -117,7 +141,6 @@ public class Tactics extends Activity {
 	/*Takes as String of contents of File and walks through collecting coordinates of players*/
 	public void copyCoordinatesFromFile(String contents) {
 		String[] allCoordinates = contents.split(",");
-
 		String[] individualCoordinates;
 		String x;
 		String y;
@@ -236,7 +259,7 @@ public class Tactics extends Activity {
 			int imageWidth = (int) w/10;
 			int imageHeight = (int)h/20;
 			player.setTextSize(TypedValue.COMPLEX_UNIT_PX, imageWidth/6); 
-			
+
 			player.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
 			squadLayout.addView(player);
 			setContentView(squadLayout);
@@ -262,44 +285,30 @@ public class Tactics extends Activity {
 			playerButtons[clickedId].setBackgroundResource(R.drawable.orb);
 			return true;
 		}
-
 	}
 
-
-/*
-	public void startAnimation() {
-		Integer tempPlayerId;
-		Animation tempAnimation;
-		List<Animation> allAnimations = a.getAnimations();
-		Iterator<Animation> animationsIterator = allAnimations.iterator();
-		
-		tempPlayerId = idIterator.next();
-		tempAnimation = animationsIterator.next();
-		playerButtons[tempPlayerId].startAnimation(tempAnimation);
-	}
-*/	
-	
-	public void printInformation() {
+	/*This method goes through the list of animations and applies
+	 * each animation to the corresponding player listed in id's*/
+	public void animatePlayers() {
 		idIterator = ids.iterator(); 
 		List<Animation> allAnimations = a.getAnimations();
 		Iterator<Animation> animationsIterator = allAnimations.iterator();
-		
+
 		int currentId;
 		while(idIterator.hasNext()) {
 			currentId = idIterator.next();	
 			playerButtons[currentId].startAnimation(animationsIterator.next());
+
+			//possibly work???
+			playerButtons[currentId].setOnTouchListener(null);
+			playerButtons[currentId].setClickable(false);
 		}
 	}
-	
+
 	/*sets all clickListeners for all squad and save and reset buttons*/
 	public void setOnClickListenersForAllPlayers() {
 		for(int i=1; i<playerButtons.length; i++) {
-			if(!ids.contains((Integer)i)) {
-				playerButtons[i].setOnTouchListener(new playerTouchListener());
-			}
-			else {
-				playerButtons[i].setClickable(false);
-			}
+			playerButtons[i].setOnTouchListener(new playerTouchListener());			
 		}
 	}
 }

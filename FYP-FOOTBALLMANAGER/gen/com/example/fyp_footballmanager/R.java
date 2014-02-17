@@ -37,7 +37,7 @@ public final class R {
         public static final int Squad=0x7f090008;
         public static final int Tactics=0x7f090009;
         public static final int action_settings=0x7f090011;
-        public static final int animate=0x7f090010;
+        public static final int cleartactics=0x7f090010;
         public static final int editpassword=0x7f090004;
         public static final int editusername=0x7f090006;
         public static final int fullSquadLayout=0x7f09000f;
