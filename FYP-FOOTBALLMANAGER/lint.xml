@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
     <issue id="NewApi">
-        <ignore path="src\com\example\fyp_footballmanager\DrawingTheArrow.java" />
-        <ignore path="src\com\example\fyp_footballmanager\Squad.java" />
-        <ignore path="src\com\example\fyp_footballmanager\Tactics.java" />
+        <ignore path="src/com/example/fyp_footballmanager/DrawingTheArrow.java" />
+        <ignore path="src/com/example/fyp_footballmanager/Fixtures.java" />
+        <ignore path="src/com/example/fyp_footballmanager/MainActivity.java" />
+        <ignore path="src/com/example/fyp_footballmanager/Squad.java" />
+        <ignore path="src/com/example/fyp_footballmanager/Tactics.java" />
     </issue>
 </lint>

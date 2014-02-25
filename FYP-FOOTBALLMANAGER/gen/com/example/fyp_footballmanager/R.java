@@ -23,29 +23,30 @@ public final class R {
     public static final class drawable {
         public static final int arrowtactic=0x7f020000;
         public static final int aviva=0x7f020001;
-        public static final int football=0x7f020002;
-        public static final int footballicon=0x7f020003;
-        public static final int footballpitch=0x7f020004;
-        public static final int mainbackground=0x7f020005;
-        public static final int orb=0x7f020006;
-        public static final int orb2=0x7f020007;
-        public static final int playericon2=0x7f020008;
-        public static final int playericon3=0x7f020009;
+        public static final int cancel=0x7f020002;
+        public static final int football=0x7f020003;
+        public static final int footballicon=0x7f020004;
+        public static final int footballpitch=0x7f020005;
+        public static final int mainbackground=0x7f020006;
+        public static final int ok=0x7f020007;
+        public static final int orb=0x7f020008;
+        public static final int orb2=0x7f020009;
     }
     public static final class id {
-        public static final int About=0x7f09000a;
-        public static final int Squad=0x7f090008;
-        public static final int Tactics=0x7f090009;
-        public static final int action_settings=0x7f090011;
-        public static final int cleartactics=0x7f090010;
+        public static final int About=0x7f09000b;
+        public static final int Fixtures=0x7f09000a;
+        public static final int Squad=0x7f090009;
+        public static final int Tactics=0x7f090008;
+        public static final int action_settings=0x7f090012;
+        public static final int cleartactics=0x7f090011;
         public static final int editpassword=0x7f090004;
         public static final int editusername=0x7f090006;
-        public static final int fullSquadLayout=0x7f09000f;
-        public static final int fullSquadLayoutActivitySquad=0x7f09000c;
+        public static final int fullSquadLayout=0x7f090010;
+        public static final int fullSquadLayoutActivitySquad=0x7f09000d;
         public static final int password=0x7f090005;
-        public static final int progressBar1=0x7f09000b;
-        public static final int reset=0x7f09000e;
-        public static final int save=0x7f09000d;
+        public static final int progressBar1=0x7f09000c;
+        public static final int reset=0x7f09000f;
+        public static final int save=0x7f09000e;
         public static final int scrollView1=0x7f090000;
         public static final int signin=0x7f090002;
         public static final int signup=0x7f090003;
@@ -54,12 +55,11 @@ public final class R {
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
-        public static final int activity_fixtures=0x7f030001;
-        public static final int activity_login=0x7f030002;
-        public static final int activity_main=0x7f030003;
-        public static final int activity_splash_screen=0x7f030004;
-        public static final int activity_squad=0x7f030005;
-        public static final int activity_tactics=0x7f030006;
+        public static final int activity_login=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int activity_splash_screen=0x7f030003;
+        public static final int activity_squad=0x7f030004;
+        public static final int activity_tactics=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f080000;

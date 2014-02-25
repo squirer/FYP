@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17" />
 
     <application
@@ -59,7 +59,7 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.example.fyp_footballmanager.Fixtures" />
-
+                
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

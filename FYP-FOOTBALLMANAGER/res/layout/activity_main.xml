@@ -10,14 +10,6 @@
      >
 
     <Button
-        android:id="@+id/Squad"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Squad" />
-
-    <Button
         android:id="@+id/Tactics"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -27,12 +19,28 @@
         android:text="Tactics" />
 
     <Button
-        android:id="@+id/About"
+        android:id="@+id/Fixtures"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/Tactics"
         android:layout_below="@+id/Tactics"
         android:layout_marginTop="27dp"
+        android:text="Fixtures" />
+
+    <Button
+        android:id="@+id/Squad"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Squad" />
+
+    <Button
+        android:id="@+id/About"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Fixtures"
+        android:layout_alignParentBottom="true"
         android:text="Instructions" />
     
 </RelativeLayout>

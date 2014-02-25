@@ -27,6 +27,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class Tactics extends Activity {
 
@@ -44,6 +45,7 @@ public class Tactics extends Activity {
 	AnimationSet a;
 	List <Integer>ids;
 	Iterator<Integer> idIterator;
+	Intent thisScreen;
 
 	Button[] playerButtons = new Button[11];
 	String[] tags = {"GK", "RB", "CB", "CB2", "LB", "RM", "CM", "CM2", "LM", "RS", "LS"};
@@ -56,22 +58,20 @@ public class Tactics extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		init();
+		Toast.makeText(getApplicationContext(),
+				"Tap a player and touch somewhere on the pitch to move him!" +
+				"",Toast.LENGTH_LONG).show();
 		setOnClickListenersForAllPlayers();
+		Toast.makeText(getApplicationContext(),
+				"Tap the clear button to start again!" +
+				"",Toast.LENGTH_LONG).show();
 
 		
 		clear.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				//Tactics t = new Tactics();
-				Class<?> ourClass;
-				try {
-					ourClass = Class.forName("com.example.fyp_footballmanager." + "Tactics" );
-					Intent ourIntent = new Intent(Tactics.this, ourClass);
-					startActivity(ourIntent);
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			public void onClick(View v)  {
+				finish();
+				startActivity(thisScreen);
 			}
 		});
 		
@@ -93,12 +93,6 @@ public class Tactics extends Activity {
 					ids.add(clickedId);
 					playerButtons[clickedId].setBackgroundResource(R.drawable.orb2);							
 					animatePlayers();
-					// problem was that i was changing the onClickListener
-					// and this was established as a new onTouchListner
-					/*
-					playerButtons[clickedId].setOnTouchListener(null);
-					playerButtons[clickedId].setClickable(false);
-					 */
 					clickedId = 0;
 					return true;
 				}
@@ -111,6 +105,7 @@ public class Tactics extends Activity {
 
 	/*Calls helper method to initialise this screen*/
 	public void init() {
+		thisScreen = getIntent();
 		a = new AnimationSet(true);
 		ids = new ArrayList<Integer>();
 

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class Squad extends Activity {
 
@@ -38,6 +39,9 @@ public class Squad extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		init();		
+		Toast.makeText(getApplicationContext(),
+				"Simply drag players into a new position \n and click save to update your formation!" +
+				"",Toast.LENGTH_LONG).show();
 	}
 	
 	/*Initialises helper variables and sets Content View*/
